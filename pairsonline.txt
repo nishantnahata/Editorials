@@ -1,0 +1,47 @@
+## Problem Name : Pairs on line
+
+###Topic : Adhoc, STL
+
+#### Difficulty : Easy
+
+###EXPLANATION
+
+We can store count of all the integers of array, *A* in a map. Now for each value, A<sub>i</sub>, we will add to the answer, the number of occurences of *mA<sub>i</sub>*+*c*
+
+
+####Time Complexity : O(NlogN)
+
+~~~c++
+#include <bits/stdc++.h>
+#define nn 200100
+#define ll long long int
+ 
+using namespace std;
+
+ll a[nn];
+
+int main()
+{
+    map<ll,int>d;
+    ll ans=0;
+    ll n,m,c;
+    cin>>n>>m>>c;
+    for(int i=0;i<n;i++)
+    {
+        cin>>a[i];
+        d[a[i]]++;
+    }
+    for(int i=0;i<n;i++)
+    {
+        ll t=m*a[i] + c;
+        if(d.find(t)!=d.end())
+        {
+            ans+=d[t];
+        }
+        if(t==a[i])
+            ans--;
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+~~~

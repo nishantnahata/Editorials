@@ -1,0 +1,55 @@
+## Problem Name : Divisor Query
+
+###Topic : Number theory
+
+#### Difficulty : Medium
+
+###EXPLANATION
+
+Using sieve of Eranthoses, we can find odd and even factors of each number. All pairwise products of odd and even factors of an integer can be calculated like following:<br>
+$$ val_i = (\sum_{j} evenFactor_{j})*(\sum_{j} oddFactor_{j}) $$<br>
+We can then simply store prefix sums for this value, i.e.<br>
+$$  prefixSum_i =  (\sum_{j=0}^{i} val_j)$$<br>
+For each query, [L,R], answer can be calculated like:
+$$  ans =  prefixSum_r - prefixSum_{l-1}$$
+
+####Time Complexity : O(NlogN)
+
+~~~c++
+#include <iostream>
+#define nn 100100
+#define mod 1000000007
+using namespace std;
+
+ll val[nn][2];
+ll prefix[nn];
+
+int main()
+{
+    int i,j;
+    for(i=1;i<=100000;i++)
+    {
+        for(j=1;i*j<=100000;j++)
+        {
+            val[j*i][i%2]+=i;
+        }
+    }
+    
+    for(i=1;i<=100000;i++)
+    {
+        prefix[i]=(val[i][0]%mod)*(val[i][1]%mod)%mod;
+        prefix[i]=(prefix[i]+prefix[i-1])%mod;
+    }
+    
+    int q;
+    cin>>q;
+    int l,r;
+    ll p;
+    for(i=0;i<q;i++)
+    {
+        cin>>l>>r;
+        p=(prefix[r]-prefix[l-1]+mod)%mod;
+        cout<<p<<endl;
+    }
+}
+~~~

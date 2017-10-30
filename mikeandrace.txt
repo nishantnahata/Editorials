@@ -1,0 +1,48 @@
+## Problem Name : Mike and Race
+
+###Topic : Greedy, Sorting
+
+#### Difficulty : Medium
+
+###EXPLANATION
+
+To solve this problem you need to understand the fact that all flags which Mike's team members will take is continuous sequence of length *n* in sorted array of flags.
+
+At first let's sort all flags in increasing order of their positions. Then using brute approach, we will choose which of the flags will be taken by leftmost person. Let it be i-th flag. Then the second person from the left will take the flag i + 1, third — (i + 2) and etc. So, we can determine the time after which all people can reach the finish line with keys if the sequence of flags begin from i-th key. We can find this value for all i less than k-n+1(above that, not every person will get a flag). Answer will be minimum of these values.
+
+
+~~~c++
+#include<iostream>
+#include<math.h>
+#include<algorithm>
+#define nn 2100
+ 
+using namespace std;
+
+ll a[nn],b[nn];
+
+int main()
+{
+    int n,k,p;
+    cin>>n>>k>>p;
+    ll ans=inf;
+    for(int i=0;i<n;i++)
+    	cin>>a[i];
+    for(int i=0;i<k;i++)
+    	cin>>b[i];
+    sort(a,a+n);
+    sort(b,b+k);
+    for(int i=0;i<k-n+1;i++)
+    {
+    	ll tmp=0,l=i;
+    	for(int j=0;j<n;j++)
+    	{
+    		tmp=max(tmp,abs(a[j]-b[l])+abs(b[l]-p));
+    		l++;
+    	}
+    	ans=min(ans,tmp);
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+~~~

@@ -1,0 +1,42 @@
+## Problem Name : Mike and Compression
+###Topic : Greedy, trees
+
+#### Difficulty : Medium
+
+###EXPLANATION
+
+Let the root node be r. Then all the nodes other than the root itself and its children can be connected to the root in exactly one step. The approach followed is to do a level order traversal, and set the parent of the node(other than root and its children) to it's parent's parent, i.e. parent[node] = parent[parent[node]]. Cost of each of these operations would be 1. In the traversal, when we are at level 2, each node will become the child of root node after operations on them. And similarly when we are at level 3, nodes at level 2 have already become the children of root, and hence after operation on this level, they will also become the children of root. In this way, tree is compressed.
+
+
+####Time Complexity : O(N+Q)
+
+~~~c++
+#include <bits/stdc++.h>
+#define pb push_back
+#define nn 100100
+ 
+using namespace std;
+
+vector<int>adj[nn];
+
+int main()
+{
+    int n,q;
+    cin>>n>>q;
+    for(int i=0;i<n-1;i++)
+    {
+        int u,v;
+        cin>>u>>v;
+        adj[u].pb(v);
+        adj[v].pb(u);
+    }
+    while(q--)
+    {
+        int u;
+        cin>>u;
+        int ans = n - 1 - adj[u].size();
+        cout<<ans<<endl;
+    }
+    return 0;
+}
+~~~

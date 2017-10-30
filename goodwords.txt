@@ -1,0 +1,46 @@
+## Problem Name : Good Words
+
+###Topic : Adhoc
+
+#### Difficulty : Easy
+
+###EXPLANATION
+
+We need to traverse through the string. Either i<sup>th</sup> character is consonant, then (i-1)<sup>th</sup> should be vowel. A string of single character is always good.
+
+####Time Complexity : O(N)
+
+~~~c++
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+bool is_vowel(char c)
+{
+    if(c=='a' || c=='e' || c=='i' || c=='o' || c=='u')
+        return true;
+    return false;
+}
+
+int main()
+{
+    string s;
+    cin>>s;
+    int n=s.length();
+    if(n==1)
+    {
+        cout<<"YES"<<endl;
+        return 0;
+    }
+    for(int i=1;i<n;i++)
+    {
+        if(is_vowel(s[i]) || is_vowel(s[i-1]))
+            continue;
+        cout<<"NO"<<endl;
+        return 0;
+    }
+    cout<<"YES"<<endl;
+    return 0;
+}
+~~~
